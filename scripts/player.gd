@@ -68,20 +68,23 @@ func dash():
 # - Double Jump
 # - Wall Jump
 func jump():
+	print(is_on_floor())
 	# Jump/Dash Jump
 	if is_on_floor():
 		# If dashing or sliding, dash jump
 		if dashing and dash_timer >= DASH_JUMP_WINDOW: # Timing window to initiate a Dash Jump
+			print("dash jump!") #For my own sanity atm
 			dash_timer = 0.0 # Dash Jump extends the dash to be longer, translating to horizontal speed in the air
 			velocity.y = JUMP_VELOCITY
+			
 		# Else, normal jump:
 		else:
 			velocity.y = JUMP_VELOCITY
 	# Wall Jump
-	elif is_on_wall():
+	elif is_on_wall() and not is_on_floor():
 		pass # Handle wall jump
 	# Double Jump
-	elif has_double_jump:
+	if has_double_jump and not is_on_floor():
 		fast_falling = false # Double Jump should reset fast fall
 		velocity.y = JUMP_VELOCITY
 		has_double_jump = false
@@ -102,6 +105,7 @@ func crouch():
 		# Else, crouch:
 		else:
 			crouching = true
+			
 	# Fast Fall
 	else:
 		air_dashing = false
@@ -140,7 +144,7 @@ func _physics_process(delta):
 		else:
 			velocity += get_gravity() * delta
 	# Restore air options
-	else:
+	elif is_on_floor():
 		has_double_jump = true
 		has_air_dash = true
 		fast_falling = false
@@ -156,9 +160,13 @@ func _physics_process(delta):
 	# If crouching, sliding, or fast falling, use the crouching sprite/hitbox
 	if crouching or sliding or fast_falling:
 		sprite.texture = crouch_sprite
+		standing_hitbox.disabled = true
+		crouching_hitbox.disabled = false
 	# Otherwise, use the standing sprite/hitbox
 	else:
 		sprite.texture = stand_sprite
+		standing_hitbox.disabled = false
+		crouching_hitbox.disabled = true
 	
 	# MOVEMENT OPTIONS
 	# Handle jump.
