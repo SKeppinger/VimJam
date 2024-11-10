@@ -6,13 +6,14 @@
 [node name="TestLevel" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("2_dt8w7")]
-position = Vector2(576, 268)
+position = Vector2(1094, 217)
 
 [node name="TestPlatform" parent="." instance=ExtResource("1_x3qa3")]
-position = Vector2(580, 335)
+position = Vector2(358, 377)
 
 [node name="TestPlatform2" parent="." instance=ExtResource("1_x3qa3")]
-position = Vector2(348, 415)
+position = Vector2(120, 419)
 
 [node name="TestPlatform3" parent="." instance=ExtResource("1_x3qa3")]
-position = Vector2(815, 284)
+position = Vector2(814, 288)
+scale = Vector2(6, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7boqxochp1h6"]
+[gd_scene load_steps=5 format=3 uid="uid://b7boqxochp1h6"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_cmrvf"]
 [ext_resource type="Texture2D" uid="uid://d1imj8mqr5267" path="res://assets/temp_player.png" id="1_dcmm8"]
@@ -6,12 +6,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sswym"]
 size = Vector2(37, 109)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqfds"]
+size = Vector2(37, 53)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_cmrvf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_dcmm8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="StandingCollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(-5.5, -1.5)
 shape = SubResource("RectangleShape2D_sswym")
+
+[node name="CrouchingCollisionBox" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-5.5, 26.5)
+shape = SubResource("RectangleShape2D_lqfds")
