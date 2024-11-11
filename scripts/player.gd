@@ -11,6 +11,8 @@ extends CharacterBody2D
 @export var SLIDE_FALLOFF = 20.0 # the lower this number, the more speed kept from sliding
 @export var JUMP_VELOCITY = -400.0
 @export var FAST_FALL_FACTOR = 3.0
+@export var WALL_JUMP_VELOCITY_Y = -300
+@export var WALL_JUMP_VELOCITY_X = 600
 
 # Children Nodes
 var standing_hitbox
@@ -28,6 +30,9 @@ var dash_direction = 1 # 1 for right, -1 for left
 var dash_timer = 0.0
 
 var has_double_jump = true
+
+var has_wall_jump = true
+var wall_jumping = false
 
 var fast_falling = false
 var crouching = false
@@ -68,7 +73,6 @@ func dash():
 # - Double Jump
 # - Wall Jump
 func jump():
-	print(is_on_floor())
 	# Jump/Dash Jump
 	if is_on_floor():
 		# If dashing or sliding, dash jump
@@ -81,10 +85,16 @@ func jump():
 		else:
 			velocity.y = JUMP_VELOCITY
 	# Wall Jump
-	elif is_on_wall() and not is_on_floor():
-		pass # Handle wall jump
+	elif has_wall_jump and is_on_wall_only():
+		print("wall jump")
+		wall_jumping = true
+		fast_falling = false # Wall jump should reset fast fall
+		velocity.y = WALL_JUMP_VELOCITY_Y
+		velocity.x = WALL_JUMP_VELOCITY_X * get_wall_normal().x
+		has_wall_jump = false
 	# Double Jump
-	if has_double_jump and not is_on_floor():
+	elif has_double_jump and not is_on_floor():
+		print("double jump")
 		fast_falling = false # Double Jump should reset fast fall
 		velocity.y = JUMP_VELOCITY
 		has_double_jump = false
@@ -148,6 +158,7 @@ func _physics_process(delta):
 		has_double_jump = true
 		has_air_dash = true
 		fast_falling = false
+		has_wall_jump = true
 	
 	# CROUCH CHECK
 	# If crouching and not holding the crouch button, stop crouching/sliding
@@ -180,8 +191,8 @@ func _physics_process(delta):
 		crouch()
 
 	# MOVEMENT
-	# If player is not dashing and not crouching
-	if !dashing and !crouching:
+	# If player is not dashing and not crouching and not wall jumping
+	if !dashing and !crouching and !wall_jumping:
 		# Get the input direction and handle the movement/deceleration.
 		move_direction = get_move_direction()
 		if move_direction:
@@ -211,4 +222,8 @@ func _physics_process(delta):
 				velocity.x = move_direction * CROUCH_SPEED
 			else:
 				velocity.x = move_toward(velocity.x, 0, CROUCH_SPEED)
+	#If player is wall jumping
+	elif wall_jumping:
+		wall_jumping = false
+		
 	move_and_slide()

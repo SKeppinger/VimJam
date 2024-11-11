@@ -7,6 +7,18 @@
 
 [node name="Player" parent="." instance=ExtResource("2_dt8w7")]
 position = Vector2(426, 306)
+SPEED = 300.0
+DASH_SPEED = 600.0
+CROUCH_SPEED = 100.0
+DASH_TIME = 0.3
+DASH_JUMP_WINDOW = 0.2
+SLIDE_WINDOW = 0.1
+SLIDE_TIME = 0.15
+SLIDE_FALLOFF = 20.0
+JUMP_VELOCITY = -400.0
+FAST_FALL_FACTOR = 3.0
+WALL_JUMP_VELOCITY_Y = -300
+WALL_JUMP_VELOCITY_X = 600
 
 [node name="TestPlatform" parent="." instance=ExtResource("1_x3qa3")]
 position = Vector2(358, 377)
@@ -17,3 +29,8 @@ position = Vector2(120, 419)
 [node name="TestPlatform3" parent="." instance=ExtResource("1_x3qa3")]
 position = Vector2(814, 288)
 scale = Vector2(6, 1)
+
+[node name="TestPlatform4" parent="." instance=ExtResource("1_x3qa3")]
+position = Vector2(1113, 98)
+rotation = -1.58093
+scale = Vector2(2.83384, 1.43282)
