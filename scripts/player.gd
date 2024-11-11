@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var SPEED = 300.0
 @export var DASH_SPEED = 600.0
 @export var CROUCH_SPEED = 100.0
+@export var SLOPE_SLIDE_SPEED = 400.0
 @export var DASH_TIME = 0.3 # seconds
 @export var DASH_JUMP_WINDOW = 0.2 # seconds after the dash has started
 @export var SLIDE_WINDOW = 0.1 # seconds after the dash has started
@@ -12,7 +13,7 @@ extends CharacterBody2D
 @export var JUMP_VELOCITY = -400.0
 @export var FAST_FALL_FACTOR = 3.0
 @export var WALL_JUMP_VELOCITY_Y = -300
-@export var WALL_JUMP_VELOCITY_X = 600
+@export var WALL_JUMP_VELOCITY_X = 1000
 
 # Children Nodes
 var standing_hitbox
@@ -112,6 +113,10 @@ func crouch():
 			crouching = true
 			if dash_timer >= SLIDE_WINDOW: # If the Slide is initiated near the end of the dash,
 				dash_timer -= SLIDE_TIME # extend the dash time by a bit
+		#If you crouch on a slope, slide
+		if is_on_floor() and get_floor_angle()!= 0:
+			sliding = true
+			crouching = true
 		# Else, crouch:
 		else:
 			crouching = true
@@ -122,6 +127,7 @@ func crouch():
 		dashing = false
 		dash_timer = 0.0 # Fast Fall cancels air dash
 		fast_falling = true
+		crouching = true
 
 # Unfortunately ugly movement direction logic
 func get_move_direction():
@@ -211,11 +217,29 @@ func _physics_process(delta):
 	elif crouching:
 		# Get the input direction and handle the movement/deceleration.
 		move_direction = get_move_direction()
-		# If player is sliding, slow down
+		# If player is sliding on a dash, slow down
 		if sliding:
-			velocity.x = move_toward(velocity.x, CROUCH_SPEED * move_direction, SLIDE_FALLOFF)
-			if velocity.x == CROUCH_SPEED * move_direction:
-				sliding = false
+			#temporary check if we want to be able to dash-slide on slope (I think)
+			if get_floor_angle()==0:
+				print("sliding!")
+				velocity.x = move_toward(velocity.x, CROUCH_SPEED * move_direction, SLIDE_FALLOFF)
+				if velocity.x == CROUCH_SPEED * move_direction:
+					sliding = false
+			#Sliding on a slope
+			else:
+				print("sliding on a slope!")
+				print(get_floor_angle())
+				#Right now it just affects x velocity, so it's very bumpy
+				#I thought this would work? But floor angle keeps fluctuating between >1 <1 so it just makes the slide dumb
+				if get_floor_angle()>1:
+					velocity.x = move_toward(velocity.x, -1*SLOPE_SLIDE_SPEED, SLIDE_FALLOFF)
+					if velocity.x == SLOPE_SLIDE_SPEED:
+						sliding = false
+				else:
+					velocity.x = move_toward(velocity.x, SLOPE_SLIDE_SPEED, SLIDE_FALLOFF)
+					if velocity.x == SLOPE_SLIDE_SPEED:
+						sliding = false
+			
 		# Otherwise, use crouched move speed
 		else:
 			if move_direction:
