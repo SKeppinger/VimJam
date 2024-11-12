@@ -62,11 +62,15 @@ func dash():
 			dash_direction = move_direction
 	# Air Dash
 	elif has_air_dash:
-		velocity.y = 0
-		dashing = true
-		air_dashing = true
-		dash_direction = move_direction
-		has_air_dash = false
+		#Otherwise you can airdash in place in the air
+		if move_direction == 0:
+			pass
+		else:
+			velocity.y = 0
+			dashing = true
+			air_dashing = true
+			dash_direction = move_direction
+			has_air_dash = false
 
 # Handle jump functionality including:
 # - Jump
