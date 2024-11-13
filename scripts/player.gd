@@ -277,3 +277,12 @@ func _physics_process(delta):
 			wall_jump_timer = 0.0
 	
 	move_and_slide()
+
+func _on_death_barrier_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		print("Player has died");
+
+
+func _on_goal_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		print("Player has reached the goal");
