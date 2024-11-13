@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 # Exported Properties
+@export var FRICTION = 30.0
+@export var AIR_RESIST = 15.0
+@export var ACCELERATION = 60.0
+@export var AIR_ACCEL = 40.0
 @export var SPEED = 300.0
 @export var DASH_SPEED = 600.0
 @export var CROUCH_SPEED = 100.0
@@ -11,9 +15,11 @@ extends CharacterBody2D
 @export var SLIDE_TIME = 0.15 # seconds
 @export var SLIDE_FALLOFF = 20.0 # the lower this number, the more speed kept from sliding
 @export var JUMP_VELOCITY = -400.0
+@export var COYOTE_TIME = 0.1
 @export var FAST_FALL_FACTOR = 3.0
 @export var WALL_JUMP_VELOCITY_Y = -300
-@export var WALL_JUMP_VELOCITY_X = 1000
+@export var WALL_JUMP_VELOCITY_X = 600
+@export var WALL_JUMP_TIME = 0.1 # seconds
 
 # Children Nodes
 var standing_hitbox
@@ -23,6 +29,8 @@ var sprite
 # Control Variables
 var move_direction = 0
 var last_move_direction = 0 # Used for more forgiving dashes
+
+var coyote_timer = 0.0
 
 var has_air_dash = true
 var dashing = false
@@ -34,6 +42,7 @@ var has_double_jump = true
 
 var has_wall_jump = true
 var wall_jumping = false
+var wall_jump_timer = 0.0
 
 var fast_falling = false
 var crouching = false
@@ -79,7 +88,7 @@ func dash():
 # - Wall Jump
 func jump():
 	# Jump/Dash Jump
-	if is_on_floor():
+	if is_on_floor() or coyote_timer < COYOTE_TIME:
 		# If dashing or sliding, dash jump
 		if dashing and dash_timer >= DASH_JUMP_WINDOW: # Timing window to initiate a Dash Jump
 			print("dash jump!") #For my own sanity atm
@@ -155,16 +164,18 @@ func get_move_direction():
 
 func _physics_process(delta):
 	# GRAVITY AND COOLDOWNS
-	# Add the gravity.
 	if not is_on_floor() and not air_dashing:
+		# Increment coyote timer
+		coyote_timer += delta
 		# If fast falling
 		if fast_falling:
 			velocity += get_gravity() * FAST_FALL_FACTOR * delta
 		# Else, normal gravity
-		else:
+		elif coyote_timer > COYOTE_TIME:
 			velocity += get_gravity() * delta
 	# Restore air options
 	elif is_on_floor():
+		coyote_timer = 0.0
 		has_double_jump = true
 		has_air_dash = true
 		fast_falling = false
@@ -202,13 +213,20 @@ func _physics_process(delta):
 
 	# MOVEMENT
 	# If player is not dashing and not crouching and not wall jumping
-	if !dashing and !crouching and !wall_jumping:
+	if !dashing and (!crouching or fast_falling) and !wall_jumping:
 		# Get the input direction and handle the movement/deceleration.
 		move_direction = get_move_direction()
 		if move_direction:
-			velocity.x = move_direction * SPEED
+			if is_on_floor():
+				velocity.x += move_direction * ACCELERATION
+			else:
+				velocity.x += move_direction * AIR_ACCEL
+			if abs(velocity.x) > SPEED * move_direction and sign(velocity.x) == sign(move_direction):
+				velocity.x = SPEED * move_direction
+		elif is_on_floor():
+			velocity.x = move_toward(velocity.x, 0, FRICTION)
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.x = move_toward(velocity.x, 0, AIR_RESIST)
 	# If player is dashing
 	elif dashing:
 		velocity.x = dash_direction * DASH_SPEED
@@ -252,6 +270,10 @@ func _physics_process(delta):
 				velocity.x = move_toward(velocity.x, 0, CROUCH_SPEED)
 	#If player is wall jumping
 	elif wall_jumping:
-		wall_jumping = false
-		
+		velocity.x = WALL_JUMP_VELOCITY_X * -1 * move_direction
+		wall_jump_timer += delta
+		if wall_jump_timer >= WALL_JUMP_TIME:
+			wall_jumping = false
+			wall_jump_timer = 0.0
+	
 	move_and_slide()
