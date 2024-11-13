@@ -7,7 +7,7 @@ var progress = 0;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	background = $Background;
-	collision = $Background/Area2D;
+	collision = $Background/DeathBarrier;
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
