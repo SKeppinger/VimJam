@@ -183,7 +183,7 @@ func _physics_process(delta):
 	
 	# CROUCH CHECK
 	# If crouching and not holding the crouch button, stop crouching/sliding
-	if crouching and not Input.is_action_pressed("crouch"):
+	if crouching or sliding and not Input.is_action_pressed("crouch"):
 		crouching = false
 		if not dashing:
 			sliding = false
