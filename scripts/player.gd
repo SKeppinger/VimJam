@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 # Exported Properties
+@export var PAUSE_TIME = 2.0 # seconds
 @export var FRICTION = 30.0
 @export var AIR_RESIST = 15.0
 @export var ACCELERATION = 60.0
@@ -21,14 +22,22 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY_X = 300
 @export var WALL_JUMP_TIME = 0.1 # seconds
 
+<<<<<<< Updated upstream
 signal death
 
 # Children Nodes
+=======
+# Children/Sibling Nodes
+>>>>>>> Stashed changes
 var standing_hitbox
 var crouching_hitbox
 var sprite
+var pause_label
 
 # Control Variables
+var paused = false
+var pause_timer = 0.0
+
 var move_direction = 0
 var last_move_direction = 0 # Used for more forgiving dashes
 
@@ -59,6 +68,14 @@ func _ready():
 	standing_hitbox = $StandingCollisionBox
 	crouching_hitbox = $CrouchingCollisionBox
 	sprite = $Sprite2D
+	pause_label = $"../Label"
+
+# Handle pause functionality
+func pause():
+	if not paused:
+		for node in get_tree().get_nodes_in_group("movable"):
+			node.add_to_group("paused")
+		paused = true
 
 # Handle dash functionality including:
 # - Dash
@@ -165,6 +182,17 @@ func get_move_direction():
 	return dir
 
 func _physics_process(delta):
+	# PAUSE TIMER
+	if paused:
+		pause_timer += delta
+		pause_label.text = "%.2f" % pause_timer
+		if pause_timer >= PAUSE_TIME:
+			paused = false
+			pause_timer = 0.0
+			for node in get_tree().get_nodes_in_group("paused"):
+				node.remove_from_group("paused")
+			pause_label.text = ""
+	
 	# GRAVITY AND COOLDOWNS
 	if not is_on_floor() and not air_dashing:
 		# Increment coyote timer
@@ -202,7 +230,7 @@ func _physics_process(delta):
 		standing_hitbox.disabled = false
 		crouching_hitbox.disabled = true
 	
-	# MOVEMENT OPTIONS
+	# INPUT
 	# Handle jump.
 	if Input.is_action_just_pressed("jump"):
 		jump()
@@ -212,6 +240,9 @@ func _physics_process(delta):
 	# Handle crouch:
 	if Input.is_action_just_pressed("crouch"):
 		crouch()
+	# Handle pause
+	if Input.is_action_just_pressed("pause"):
+		pause()
 
 	# MOVEMENT
 	# If player is not dashing and not crouching and not wall jumping
