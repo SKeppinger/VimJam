@@ -13,25 +13,6 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_dt8w7")]
 position = Vector2(426, 306)
-FRICTION = 30.0
-AIR_RESIST = 15.0
-ACCELERATION = 60.0
-AIR_ACCEL = 40.0
-SPEED = 300.0
-DASH_SPEED = 600.0
-CROUCH_SPEED = 100.0
-SLOPE_SLIDE_SPEED = 400.0
-DASH_TIME = 0.3
-DASH_JUMP_WINDOW = 0.2
-SLIDE_WINDOW = 0.1
-SLIDE_TIME = 0.15
-SLIDE_FALLOFF = 20.0
-JUMP_VELOCITY = -400.0
-COYOTE_TIME = 0.1
-FAST_FALL_FACTOR = 3.0
-WALL_JUMP_VELOCITY_Y = -300
-WALL_JUMP_VELOCITY_X = 300
-WALL_JUMP_TIME = 0.1
 
 [node name="TestPlatform" parent="." instance=ExtResource("1_x3qa3")]
 position = Vector2(358, 377)
@@ -74,6 +55,7 @@ grow_vertical = 1
 size_flags_horizontal = 0
 
 [node name="ColorRect" parent="DeathScreen" index="0"]
+visible = false
 offset_left = -799.0
 offset_top = -217.0
 offset_right = 353.0

@@ -14,7 +14,7 @@ extends CharacterBody2D
 @export var DASH_JUMP_WINDOW = 0.2 # seconds after the dash has started
 @export var SLIDE_WINDOW = 0.1 # seconds after the dash has started
 @export var SLIDE_TIME = 0.15 # seconds
-@export var SLIDE_FALLOFF = 20.0 # the lower this number, the more speed kept from sliding
+@export var SLIDE_FALLOFF = 5.0 # the lower this number, the more speed kept from sliding
 @export var JUMP_VELOCITY = -400.0
 @export var COYOTE_TIME = 0.1
 @export var FAST_FALL_FACTOR = 3.0
@@ -27,7 +27,8 @@ signal death
 # Children/Sibling Nodes
 var standing_hitbox
 var crouching_hitbox
-var sprite
+#var sprite
+var animated_sprite
 var pause_label
 
 # Control Variables
@@ -63,7 +64,8 @@ var stand_sprite = load("res://assets/temp_player.png")
 func _ready():
 	standing_hitbox = $StandingCollisionBox
 	crouching_hitbox = $CrouchingCollisionBox
-	sprite = $Sprite2D
+	#sprite = $Sprite2D
+	animated_sprite = $AnimatedSprite2D
 	pause_label = $"../Label"
 
 # Handle pause functionality
@@ -80,6 +82,7 @@ func dash():
 	# Dash
 	if is_on_floor():
 		dashing = true
+		animated_sprite.play("dash")
 		if move_direction == 0:
 			dash_direction = last_move_direction
 		else:
@@ -93,6 +96,7 @@ func dash():
 			velocity.y = 0
 			dashing = true
 			air_dashing = true
+			animated_sprite.play("air_dash")
 			dash_direction = move_direction
 			has_air_dash = false
 
@@ -109,10 +113,13 @@ func jump():
 			print("dash jump!") #For my own sanity atm
 			dash_timer = 0.0 # Dash Jump extends the dash to be longer, translating to horizontal speed in the air
 			velocity.y = JUMP_VELOCITY
-			
+			animated_sprite.play("jump")
+			animated_sprite.frame = 0
 		# Else, normal jump:
 		else:
 			velocity.y = JUMP_VELOCITY
+			animated_sprite.play("jump")
+			animated_sprite.frame = 0
 	# Wall Jump
 	elif has_wall_jump and is_on_wall_only():
 		print("wall jump")
@@ -139,15 +146,18 @@ func crouch():
 		if dashing:
 			sliding = true
 			crouching = true
+			animated_sprite.play("slide")
 			if dash_timer >= SLIDE_WINDOW: # If the Slide is initiated near the end of the dash,
 				dash_timer -= SLIDE_TIME # extend the dash time by a bit
 		#If you crouch on a slope, slide
 		if is_on_floor() and get_floor_angle()!= 0:
 			sliding = true
 			crouching = true
+			animated_sprite.play("slide")
 		# Else, crouch:
 		else:
 			crouching = true
+			animated_sprite.play("slide")
 			
 	# Fast Fall
 	else:
@@ -156,6 +166,7 @@ func crouch():
 		dash_timer = 0.0 # Fast Fall cancels air dash
 		fast_falling = true
 		crouching = true
+		animated_sprite.play("slide")
 
 # Unfortunately ugly movement direction logic
 func get_move_direction():
@@ -178,6 +189,37 @@ func get_move_direction():
 	return dir
 
 func _physics_process(delta):
+	#ANIMATIONS
+	# Face the movement direction
+	if sign(velocity.x) == 1 and sign(animated_sprite.scale.x) == -1:
+		animated_sprite.scale.x *= -1
+	elif sign(velocity.x) == -1 and sign(animated_sprite.scale.x) == 1:
+		animated_sprite.scale.x *= -1
+	if air_dashing:
+		animated_sprite.scale.x *= -1
+	# Manage jump frames
+	if animated_sprite.animation == "jump":
+		if velocity.y < 0 and animated_sprite.frame != 0 and animated_sprite.frame != 1:
+			animated_sprite.frame = 2
+		elif not is_on_floor():
+			animated_sprite.frame = 2
+		elif animated_sprite.frame != 3:
+			animated_sprite.frame = 3
+	# Manage dash animation
+	if animated_sprite.animation == "dash" and not dashing:
+		animated_sprite.stop()
+	# Manage crouch and fast fall animation
+	if animated_sprite.animation == "slide" and not sliding:
+		if not is_on_floor() or (is_on_floor() and get_move_direction() == 0):
+			animated_sprite.frame = 0
+	# Default animations
+	if not is_on_floor() and not dashing and not fast_falling and not sliding and not crouching:
+		animated_sprite.play("jump")
+	elif is_on_floor() and not crouching and get_move_direction() == 0:
+		animated_sprite.play("idle")
+	elif is_on_floor() and get_move_direction() != 0 and not dashing and not crouching:
+		animated_sprite.play("run")
+	
 	# PAUSE TIMER
 	if paused:
 		pause_timer += delta
@@ -217,12 +259,12 @@ func _physics_process(delta):
 	# SPRITES AND HITBOXES
 	# If crouching, sliding, or fast falling, use the crouching sprite/hitbox
 	if crouching or sliding or fast_falling:
-		sprite.texture = crouch_sprite
+		#sprite.texture = crouch_sprite
 		standing_hitbox.disabled = true
 		crouching_hitbox.disabled = false
 	# Otherwise, use the standing sprite/hitbox
 	else:
-		sprite.texture = stand_sprite
+		#sprite.texture = stand_sprite
 		standing_hitbox.disabled = false
 		crouching_hitbox.disabled = true
 	
@@ -234,7 +276,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash"):
 		dash()
 	# Handle crouch:
-	if Input.is_action_just_pressed("crouch"):
+	if Input.is_action_just_pressed("crouch") or crouching:
 		crouch()
 	# Handle pause
 	if Input.is_action_just_pressed("pause"):
