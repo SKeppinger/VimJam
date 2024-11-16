@@ -1,37 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dynavdep1mf3s"]
+[gd_scene load_steps=5 format=3 uid="uid://dynavdep1mf3s"]
 
 [ext_resource type="PackedScene" uid="uid://xr5jlmglonna" path="res://scenes/test_platform.tscn" id="1_x3qa3"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_dt8w7"]
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="3_i2tp2"]
 [ext_resource type="PackedScene" path="res://scenes/death_screen.tscn" id="4_jol04"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_2bu26"]
-font_size = 48
-font_color = Color(0, 0, 0, 1)
-
 [node name="TestLevel" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("2_dt8w7")]
 position = Vector2(426, 306)
-FRICTION = 30.0
-AIR_RESIST = 15.0
-ACCELERATION = 60.0
-AIR_ACCEL = 40.0
-SPEED = 300.0
-DASH_SPEED = 600.0
-CROUCH_SPEED = 100.0
-SLOPE_SLIDE_SPEED = 400.0
-DASH_TIME = 0.3
-DASH_JUMP_WINDOW = 0.2
-SLIDE_WINDOW = 0.1
-SLIDE_TIME = 0.15
-SLIDE_FALLOFF = 20.0
-JUMP_VELOCITY = -400.0
-COYOTE_TIME = 0.1
-FAST_FALL_FACTOR = 3.0
-WALL_JUMP_VELOCITY_Y = -300
-WALL_JUMP_VELOCITY_X = 300
-WALL_JUMP_TIME = 0.1
 
 [node name="TestPlatform" parent="." instance=ExtResource("1_x3qa3")]
 position = Vector2(358, 377)
@@ -78,11 +55,6 @@ offset_left = -799.0
 offset_top = -217.0
 offset_right = 353.0
 offset_bottom = 432.0
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_2bu26")
 
 [connection signal="death" from="Player" to="DeathScreen" method="_on_player_death"]
 

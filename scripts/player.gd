@@ -22,13 +22,9 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY_X = 300
 @export var WALL_JUMP_TIME = 0.1 # seconds
 
-<<<<<<< Updated upstream
 signal death
 
-# Children Nodes
-=======
 # Children/Sibling Nodes
->>>>>>> Stashed changes
 var standing_hitbox
 var crouching_hitbox
 var sprite

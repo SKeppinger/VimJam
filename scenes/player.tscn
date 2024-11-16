@@ -15,25 +15,6 @@ height = 58.0
 collision_layer = 3
 collision_mask = 9
 script = ExtResource("1_cmrvf")
-FRICTION = null
-AIR_RESIST = null
-ACCELERATION = null
-AIR_ACCEL = null
-SPEED = null
-DASH_SPEED = null
-CROUCH_SPEED = null
-SLOPE_SLIDE_SPEED = null
-DASH_TIME = null
-DASH_JUMP_WINDOW = null
-SLIDE_WINDOW = null
-SLIDE_TIME = null
-SLIDE_FALLOFF = null
-JUMP_VELOCITY = null
-COYOTE_TIME = null
-FAST_FALL_FACTOR = null
-WALL_JUMP_VELOCITY_Y = null
-WALL_JUMP_VELOCITY_X = null
-WALL_JUMP_TIME = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_dcmm8")
