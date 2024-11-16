@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://86hlw0txorr7"]
+
+[sub_resource type="FontFile" id="FontFile_1jguf"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_627xc"]
+font = SubResource("FontFile_1jguf")
+
+[sub_resource type="FontFile" id="FontFile_hjggr"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_paqip"]
+font = SubResource("FontFile_hjggr")
+
+[sub_resource type="FontFile" id="FontFile_bs6fr"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_yy8x6"]
+font = SubResource("FontFile_bs6fr")
+
+[sub_resource type="FontFile" id="FontFile_8bj40"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_x1mjg"]
+font = SubResource("FontFile_8bj40")
+
+[node name="ControlScheme" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Move" type="CanvasLayer" parent="."]
+
+[node name="W" type="Label" parent="Move"]
+offset_left = 222.0
+offset_top = 78.0
+offset_right = 262.0
+offset_bottom = 101.0
+text = "W"
+label_settings = SubResource("LabelSettings_627xc")
+
+[node name="A" type="Label" parent="Move"]
+offset_left = 596.0
+offset_top = 218.0
+offset_right = 636.0
+offset_bottom = 241.0
+text = "A"
+label_settings = SubResource("LabelSettings_paqip")
+
+[node name="S" type="Label" parent="Move"]
+offset_left = 225.0
+offset_top = 99.0
+offset_right = 265.0
+offset_bottom = 122.0
+text = "S"
+label_settings = SubResource("LabelSettings_yy8x6")
+
+[node name="D" type="Label" parent="Move"]
+offset_left = 448.0
+offset_top = 306.0
+offset_right = 488.0
+offset_bottom = 329.0
+text = "D"
+label_settings = SubResource("LabelSettings_x1mjg")

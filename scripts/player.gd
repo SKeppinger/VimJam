@@ -361,3 +361,6 @@ func die():
 	print("Player has died")
 	death.emit()
 	
+#Kill (with hammers)
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	die()
