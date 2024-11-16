@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dynavdep1mf3s"]
+[gd_scene load_steps=5 format=3 uid="uid://dynavdep1mf3s"]
 
 [ext_resource type="PackedScene" uid="uid://xr5jlmglonna" path="res://scenes/test_platform.tscn" id="1_x3qa3"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_dt8w7"]
+[ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="3_i2tp2"]
+[ext_resource type="PackedScene" uid="uid://dh4ahlpjad1h4" path="res://scenes/death_screen.tscn" id="4_jol04"]
 
 [node name="TestLevel" type="Node2D"]
 
@@ -32,3 +34,30 @@ scale = Vector2(4.93741, -2.65167)
 position = Vector2(665, 472)
 rotation = -2.89201
 scale = Vector2(3.09169, 1.76175)
+
+[node name="Enemy" parent="." instance=ExtResource("3_i2tp2")]
+position = Vector2(801, 216)
+
+[node name="DeathScreen" parent="." instance=ExtResource("4_jol04")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 801.0
+offset_top = 216.0
+offset_right = 801.0
+offset_bottom = 216.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 0
+
+[node name="ColorRect" parent="DeathScreen" index="0"]
+offset_left = -799.0
+offset_top = -217.0
+offset_right = 353.0
+offset_bottom = 432.0
+
+[connection signal="death" from="Player" to="DeathScreen" method="_on_player_death"]
+
+[editable path="Player"]
+[editable path="Enemy"]
+[editable path="DeathScreen"]

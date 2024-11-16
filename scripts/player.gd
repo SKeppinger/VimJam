@@ -18,8 +18,10 @@ extends CharacterBody2D
 @export var COYOTE_TIME = 0.1
 @export var FAST_FALL_FACTOR = 3.0
 @export var WALL_JUMP_VELOCITY_Y = -300
-@export var WALL_JUMP_VELOCITY_X = 600
+@export var WALL_JUMP_VELOCITY_X = 300
 @export var WALL_JUMP_TIME = 0.1 # seconds
+
+signal death
 
 # Children Nodes
 var standing_hitbox
@@ -183,7 +185,7 @@ func _physics_process(delta):
 	
 	# CROUCH CHECK
 	# If crouching and not holding the crouch button, stop crouching/sliding
-	if crouching or sliding and not Input.is_action_pressed("crouch"):
+	if (crouching or sliding) and not Input.is_action_pressed("crouch"):
 		crouching = false
 		if not dashing:
 			sliding = false
@@ -282,7 +284,11 @@ func _on_death_barrier_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		print("Player has died");
 
-
 func _on_goal_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		print("Player has reached the goal");
+		
+func die():
+	print("Player has died")
+	death.emit()
+	
