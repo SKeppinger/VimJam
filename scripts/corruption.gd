@@ -14,7 +14,7 @@ var completed = false;
 func _ready() -> void:
 	background = $Background;
 	collision = $Background/DeathBarrier;
-	player = $Player;
+	player = $"../Player";
 	visibility = $Background/DeathBarrier/VisibleOnScreenNotifier2D;
 	death_screen = $CanvasLayer/DeathScreen/AnimationPlayer;
 

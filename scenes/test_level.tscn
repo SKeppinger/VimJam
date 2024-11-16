@@ -1,9 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://djp6l6kuo7jkc"]
+[gd_scene load_steps=8 format=3 uid="uid://dynavdep1mf3s"]
 
 [ext_resource type="PackedScene" uid="uid://xr5jlmglonna" path="res://scenes/test_platform.tscn" id="1_x3qa3"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_dt8w7"]
 [ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="3_i2tp2"]
-[ext_resource type="PackedScene" uid="uid://crp2e7eo3bqw2" path="res://scenes/death_screen.tscn" id="4_jol04"]
+[ext_resource type="PackedScene" uid="uid://dh4ahlpjad1h4" path="res://scenes/death_screen.tscn" id="4_jol04"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rujl3"]
+radius = 22.0
+height = 116.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wyma5"]
+radius = 21.5
+height = 58.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_2bu26"]
 font_size = 48
@@ -13,6 +21,14 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_dt8w7")]
 position = Vector2(426, 306)
+
+[node name="StandingCollisionBox" parent="Player" index="0"]
+position = Vector2(-4, -2)
+shape = SubResource("CapsuleShape2D_rujl3")
+
+[node name="CrouchingCollisionBox" parent="Player" index="1"]
+position = Vector2(-4, 27)
+shape = SubResource("CapsuleShape2D_wyma5")
 
 [node name="TestPlatform" parent="." instance=ExtResource("1_x3qa3")]
 position = Vector2(358, 377)
