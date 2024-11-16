@@ -2,16 +2,33 @@ extends Node2D
 
 var background;
 var collision;
+var player;
 var progress = 0;
+var speed = 2;
+var collision_offset = 150;
+var visibility;
+var death_screen;
+var completed = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	background = $Background;
 	collision = $Background/DeathBarrier;
+	player = $Player;
+	visibility = $Background/DeathBarrier/VisibleOnScreenNotifier2D;
+	death_screen = $CanvasLayer/DeathScreen/AnimationPlayer;
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	background.material.set_shader_parameter("pos",progress);
-	collision.position.x = progress * background.texture.get_width();
-	progress += delta / 100;
+	if (!completed && collision.position.x > player.position.x && !visibility.is_on_screen()):
+		death_screen.play("fade_to_black");
+		completed = true;
+	elif (!completed):
+		background.material.set_shader_parameter("pos",progress);
+		collision.position.x = progress * background.texture.get_width() + collision_offset;
+		progress += delta * speed / 100;
+
+func _on_player_death():
+	speed = 10;
+	

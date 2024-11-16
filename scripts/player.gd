@@ -351,7 +351,7 @@ func _physics_process(delta):
 
 func _on_death_barrier_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		print("Player has died");
+		die();
 
 func _on_goal_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

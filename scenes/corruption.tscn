@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://5v34nt0bbvuj"]
+[gd_scene load_steps=10 format=3 uid="uid://5v34nt0bbvuj"]
 
 [ext_resource type="Script" path="res://scripts/corruption.gd" id="1_xtbs4"]
 [ext_resource type="Shader" path="res://assets/corruption.gdshader" id="2_d7pbe"]
 [ext_resource type="Texture2D" uid="uid://o6bfymype5ra" path="res://assets/background.png" id="3_qgo6g"]
 [ext_resource type="Texture2D" uid="uid://dfl8h37bwigmi" path="res://assets/wall.png" id="4_ddyg7"]
+[ext_resource type="PackedScene" uid="uid://crp2e7eo3bqw2" path="res://scenes/death_screen.tscn" id="5_0x4jh"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="5_k17gu"]
 [ext_resource type="PackedScene" uid="uid://xr5jlmglonna" path="res://scenes/test_platform.tscn" id="6_6nqme"]
 
@@ -23,23 +24,8 @@ position = Vector2(2, 0)
 texture = ExtResource("3_qgo6g")
 centered = false
 
-[node name="Goal" type="Area2D" parent="Background"]
-position = Vector2(2499, 768)
-rotation = -1.5708
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Goal"]
-position = Vector2(8.74228e-08, 2)
-shape = SubResource("WorldBoundaryShape2D_1o7r2")
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Goal"]
-position = Vector2(0, 2)
-rotation = 1.5708
-texture = ExtResource("4_ddyg7")
-centered = false
-offset = Vector2(0, -768)
-
 [node name="DeathBarrier" type="Area2D" parent="Background"]
-position = Vector2(1, 0)
+position = Vector2(78, 0)
 rotation = 1.5708
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Background/DeathBarrier"]
@@ -47,11 +33,14 @@ position = Vector2(-3.41336e-06, 1)
 shape = SubResource("WorldBoundaryShape2D_1o7r2")
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/DeathBarrier"]
-position = Vector2(0, 2)
+position = Vector2(3.62002e-06, 3)
 rotation = 1.5708
 texture = ExtResource("4_ddyg7")
 centered = false
 offset = Vector2(0, -768)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Background/DeathBarrier"]
+rect = Rect2(0, 0, 768, 10)
 
 [node name="Player" parent="." instance=ExtResource("5_k17gu")]
 position = Vector2(903, 437)
@@ -59,7 +48,6 @@ position = Vector2(903, 437)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-380, -206)
 anchor_mode = 0
-zoom = Vector2(1.5, 1.5)
 limit_left = 0
 limit_top = 0
 limit_right = 4096
@@ -81,5 +69,9 @@ position = Vector2(2074, 298)
 [node name="TestPlatform5" parent="." instance=ExtResource("6_6nqme")]
 position = Vector2(2512, 294)
 
-[connection signal="body_entered" from="Background/Goal" to="Player" method="_on_goal_body_entered"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DeathScreen" parent="CanvasLayer" instance=ExtResource("5_0x4jh")]
+
 [connection signal="body_entered" from="Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
+[connection signal="death" from="Player" to="." method="_on_player_death"]

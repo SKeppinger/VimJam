@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dynavdep1mf3s"]
+[gd_scene load_steps=6 format=3 uid="uid://djp6l6kuo7jkc"]
 
 [ext_resource type="PackedScene" uid="uid://xr5jlmglonna" path="res://scenes/test_platform.tscn" id="1_x3qa3"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_dt8w7"]
-[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="3_i2tp2"]
-[ext_resource type="PackedScene" path="res://scenes/death_screen.tscn" id="4_jol04"]
+[ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="3_i2tp2"]
+[ext_resource type="PackedScene" uid="uid://crp2e7eo3bqw2" path="res://scenes/death_screen.tscn" id="4_jol04"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2bu26"]
 font_size = 48
