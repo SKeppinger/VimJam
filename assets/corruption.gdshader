@@ -22,7 +22,7 @@ void fragment() {
 	else if (grid_uv.x - pos < random(grid_uv) / 10.0)
 		COLOR = vec4(0, 0, 0, 1);
 	else
-		COLOR = vec4(1, 1, 1, 1);
+		COLOR = vec4(1, 1, 1, 0);
 }	
 
 //void light() {

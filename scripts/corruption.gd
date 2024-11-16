@@ -21,7 +21,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if (!completed && collision.position.x > player.position.x && !visibility.is_on_screen()):
+	if (player && !completed && 
+		collision.position.x > player.position.x && 
+		!visibility.is_on_screen()
+	):
 		death_screen.play("fade_to_black");
 		completed = true;
 	elif (!completed):

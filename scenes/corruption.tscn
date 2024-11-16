@@ -1,14 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://5v34nt0bbvuj"]
+[gd_scene load_steps=7 format=3 uid="uid://5v34nt0bbvuj"]
 
 [ext_resource type="Script" path="res://scripts/corruption.gd" id="1_xtbs4"]
 [ext_resource type="Shader" path="res://assets/corruption.gdshader" id="2_d7pbe"]
 [ext_resource type="Texture2D" uid="uid://o6bfymype5ra" path="res://assets/background.png" id="3_qgo6g"]
-[ext_resource type="Texture2D" uid="uid://dfl8h37bwigmi" path="res://assets/wall.png" id="4_ddyg7"]
-[ext_resource type="PackedScene" uid="uid://dh4ahlpjad1h4" path="res://scenes/death_screen.tscn" id="5_0x4jh"]
+[ext_resource type="PackedScene" uid="uid://crp2e7eo3bqw2" path="res://scenes/death_screen.tscn" id="5_0x4jh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofg1w"]
 shader = ExtResource("2_d7pbe")
-shader_parameter/amount = 100
+shader_parameter/amount = 150
 shader_parameter/pos = 0.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1o7r2"]
@@ -17,6 +16,7 @@ shader_parameter/pos = 0.0
 script = ExtResource("1_xtbs4")
 
 [node name="Background" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_ofg1w")
 position = Vector2(2, 0)
 texture = ExtResource("3_qgo6g")
@@ -31,13 +31,6 @@ collision_mask = 10
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Background/DeathBarrier"]
 position = Vector2(-3.41336e-06, 1)
 shape = SubResource("WorldBoundaryShape2D_1o7r2")
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/DeathBarrier"]
-position = Vector2(3.62002e-06, 3)
-rotation = 1.5708
-texture = ExtResource("4_ddyg7")
-centered = false
-offset = Vector2(0, -768)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Background/DeathBarrier"]
 rect = Rect2(0, 0, 768, 10)
