@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 # Exported Properties
-@export var PAUSE_TIME = 2.0 # seconds
+@export var PAUSE_TIME = 1.0 # seconds
 @export var FRICTION = 30.0
-@export var AIR_RESIST = 15.0
+@export var AIR_RESIST = 1.0
 @export var ACCELERATION = 60.0
 @export var AIR_ACCEL = 40.0
 @export var SPEED = 300.0
@@ -68,7 +68,7 @@ func _ready():
 	crouching_hitbox = $CrouchingCollisionBox
 	#sprite = $Sprite2D
 	animated_sprite = $AnimatedSprite2D
-	pause_label = $"../Label"
+	pause_label = $"../Corruption/CanvasLayer/Label"
 
 # Handle pause functionality
 func pause():
@@ -172,16 +172,18 @@ func crouch():
 
 # Unfortunately ugly movement direction logic
 func get_move_direction():
+	if paused:
+		return 0
 	var dir = move_direction
 	if Input.is_action_just_pressed("move_right") or Input.is_action_just_pressed("move_left"):
 		if Input.is_action_just_pressed("move_right"):
 			dir = 1
 		if Input.is_action_just_pressed("move_left"):
 			dir = -1
-	if dir == -1 and not Input.is_action_pressed("move_left"):
+	if dir != 1 and not Input.is_action_pressed("move_left"):
 		if Input.is_action_pressed("move_right"):
 			dir = 1
-	if dir == 1 and not Input.is_action_pressed("move_right"):
+	if dir != -1 and not Input.is_action_pressed("move_right"):
 		if Input.is_action_pressed("move_left"):
 			dir = -1
 	if not Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
@@ -213,14 +215,14 @@ func _physics_process(delta):
 			animated_sprite.stop()
 		# Manage crouch and fast fall animation
 		if animated_sprite.animation == "slide" and not sliding:
-			if not is_on_floor() or (is_on_floor() and get_move_direction() == 0):
+			if not is_on_floor() or (is_on_floor() and velocity.x == 0):
 				animated_sprite.frame = 0
 		# Default animations
 		if not is_on_floor() and not dashing and not fast_falling and not sliding and not crouching:
 			animated_sprite.play("jump")
-		elif is_on_floor() and not crouching and get_move_direction() == 0:
+		elif is_on_floor() and not dashing and not crouching and velocity.x == 0:
 			animated_sprite.play("idle")
-		elif is_on_floor() and get_move_direction() != 0 and not dashing and not crouching:
+		elif is_on_floor() and not dashing and not crouching:
 			animated_sprite.play("run")
 		
 		# PAUSE TIMER
@@ -286,70 +288,71 @@ func _physics_process(delta):
 			pause()
 
 		# MOVEMENT
-		# If player is not dashing and not crouching and not wall jumping
-		if !dashing and (!crouching or fast_falling) and !wall_jumping:
-			# Get the input direction and handle the movement/deceleration.
-			move_direction = get_move_direction()
-			if move_direction:
-				if is_on_floor():
-					velocity.x += move_direction * ACCELERATION
-				else:
-					velocity.x += move_direction * AIR_ACCEL
-				if abs(velocity.x) > SPEED * move_direction and sign(velocity.x) == sign(move_direction):
-					velocity.x = SPEED * move_direction
-			elif is_on_floor():
-				velocity.x = move_toward(velocity.x, 0, FRICTION)
-			else:
-				velocity.x = move_toward(velocity.x, 0, AIR_RESIST)
-		# If player is dashing
-		elif dashing:
-			velocity.x = dash_direction * DASH_SPEED
-			dash_timer += delta
-			if dash_timer > DASH_TIME:
-				dashing = false
-				air_dashing =  false
-				dash_timer = 0.0
-		# If player is sliding
-		elif crouching:
-			# Get the input direction and handle the movement/deceleration.
-			move_direction = get_move_direction()
-			# If player is sliding on a dash, slow down
-			if sliding:
-				#temporary check if we want to be able to dash-slide on slope (I think)
-				if get_floor_angle()==0:
-					print("sliding!")
-					velocity.x = move_toward(velocity.x, CROUCH_SPEED * move_direction, SLIDE_FALLOFF)
-					if velocity.x == CROUCH_SPEED * move_direction:
-						sliding = false
-				#Sliding on a slope
-				else:
-					print("sliding on a slope!")
-					print(get_floor_angle())
-					#Right now it just affects x velocity, so it's very bumpy
-					#I thought this would work? But floor angle keeps fluctuating between >1 <1 so it just makes the slide dumb
-					if get_floor_angle()>1:
-						velocity.x = move_toward(velocity.x, -1*SLOPE_SLIDE_SPEED, SLIDE_FALLOFF)
-						if velocity.x == SLOPE_SLIDE_SPEED:
-							sliding = false
-					else:
-						velocity.x = move_toward(velocity.x, SLOPE_SLIDE_SPEED, SLIDE_FALLOFF)
-						if velocity.x == SLOPE_SLIDE_SPEED:
-							sliding = false
-				
-			# Otherwise, use crouched move speed
-			else:
+		if not paused:
+			# If player is not dashing and not crouching and not wall jumping
+			if !dashing and (!crouching or fast_falling) and !wall_jumping:
+				# Get the input direction and handle the movement/deceleration.
+				move_direction = get_move_direction()
 				if move_direction:
-					velocity.x = move_direction * CROUCH_SPEED
+					if is_on_floor():
+						velocity.x += move_direction * ACCELERATION
+					else:
+						velocity.x += move_direction * AIR_ACCEL
+					if abs(velocity.x) > SPEED * move_direction and sign(velocity.x) == sign(move_direction):
+						velocity.x = SPEED * move_direction
+				elif is_on_floor():
+					velocity.x = move_toward(velocity.x, 0, FRICTION)
 				else:
-					velocity.x = move_toward(velocity.x, 0, CROUCH_SPEED)
-		#If player is wall jumping
-		elif wall_jumping:
-			velocity.x = WALL_JUMP_VELOCITY_X * -1 * move_direction
-			wall_jump_timer += delta
-			if wall_jump_timer >= WALL_JUMP_TIME:
-				wall_jumping = false
-				wall_jump_timer = 0.0
-		
+					velocity.x = move_toward(velocity.x, 0, AIR_RESIST)
+			# If player is dashing
+			elif dashing:
+				velocity.x = dash_direction * DASH_SPEED
+				dash_timer += delta
+				if dash_timer > DASH_TIME:
+					dashing = false
+					air_dashing =  false
+					dash_timer = 0.0
+			# If player is sliding
+			elif crouching:
+				# Get the input direction and handle the movement/deceleration.
+				move_direction = get_move_direction()
+				# If player is sliding on a dash, slow down
+				if sliding:
+					#temporary check if we want to be able to dash-slide on slope (I think)
+					if get_floor_angle()==0:
+						print("sliding!")
+						velocity.x = move_toward(velocity.x, CROUCH_SPEED * move_direction, SLIDE_FALLOFF)
+						if velocity.x == CROUCH_SPEED * move_direction:
+							sliding = false
+					#Sliding on a slope
+					else:
+						print("sliding on a slope!")
+						print(get_floor_angle())
+						#Right now it just affects x velocity, so it's very bumpy
+						#I thought this would work? But floor angle keeps fluctuating between >1 <1 so it just makes the slide dumb
+						if get_floor_angle()>1:
+							velocity.x = move_toward(velocity.x, -1*SLOPE_SLIDE_SPEED, SLIDE_FALLOFF)
+							if velocity.x == SLOPE_SLIDE_SPEED:
+								sliding = false
+						else:
+							velocity.x = move_toward(velocity.x, SLOPE_SLIDE_SPEED, SLIDE_FALLOFF)
+							if velocity.x == SLOPE_SLIDE_SPEED:
+								sliding = false
+					
+				# Otherwise, use crouched move speed
+				else:
+					if move_direction:
+						velocity.x = move_direction * CROUCH_SPEED
+					else:
+						velocity.x = move_toward(velocity.x, 0, CROUCH_SPEED)
+			#If player is wall jumping
+			elif wall_jumping:
+				velocity.x = WALL_JUMP_VELOCITY_X * -1 * move_direction
+				wall_jump_timer += delta
+				if wall_jump_timer >= WALL_JUMP_TIME:
+					wall_jumping = false
+					wall_jump_timer = 0.0
+
 		move_and_slide()
 
 func _on_death_barrier_body_entered(body: Node2D) -> void:
