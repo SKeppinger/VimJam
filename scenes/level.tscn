@@ -1,23 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://nm3keol8rr63"]
+[gd_scene load_steps=6 format=3 uid="uid://nm3keol8rr63"]
 
 [ext_resource type="PackedScene" uid="uid://5v34nt0bbvuj" path="res://scenes/corruption.tscn" id="1_jij70"]
-[ext_resource type="Texture2D" uid="uid://dfl8h37bwigmi" path="res://assets/wall.png" id="2_f0epw"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_jgokv"]
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
+[ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
+font_size = 48
+font_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
 
 [node name="Corruption" parent="." instance=ExtResource("1_jij70")]
-
-[node name="Background" parent="Corruption" index="0"]
-z_index = 0
-
-[node name="Sprite2D" parent="Corruption/Background/DeathBarrier" index="1"]
-position = Vector2(3.62002e-06, 3)
-rotation = 1.5708
-texture = ExtResource("2_f0epw")
-centered = false
-offset = Vector2(0, -768)
 
 [node name="Player" parent="." instance=ExtResource("2_jgokv")]
 position = Vector2(508, 519)
@@ -25,6 +19,14 @@ position = Vector2(508, 519)
 [node name="Platform" parent="." instance=ExtResource("3_yv6ef")]
 position = Vector2(1106, 579)
 scale = Vector2(10, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_ot66m")
+
+[node name="EvilPlatform" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(1204, 513)
 
 [connection signal="body_entered" from="Corruption/Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
 [connection signal="death" from="Player" to="Corruption" method="_on_player_death"]
