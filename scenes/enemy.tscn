@@ -51,7 +51,7 @@ position = Vector2(9.53674e-07, 0)
 scale = Vector2(3.2965, 3.40548)
 sprite_frames = SubResource("SpriteFrames_n5yf5")
 autoplay = "default"
-frame_progress = 0.339378
+frame_progress = 0.0643508
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)

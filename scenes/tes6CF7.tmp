@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dynavdep1mf3s"]
+[gd_scene load_steps=10 format=3 uid="uid://dynavdep1mf3s"]
 
 [ext_resource type="PackedScene" uid="uid://xr5jlmglonna" path="res://scenes/test_platform.tscn" id="1_x3qa3"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_dt8w7"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="3_i2tp2"]
 [ext_resource type="PackedScene" uid="uid://c16sb75072qw1" path="res://scenes/ranged_enemy.tscn" id="4_4m0n2"]
 [ext_resource type="PackedScene" uid="uid://dh4ahlpjad1h4" path="res://scenes/death_screen.tscn" id="4_jol04"]
+[ext_resource type="PackedScene" uid="uid://du6jkpf81s0g7" path="res://scenes/projectile.tscn" id="5_5jg1q"]
 [ext_resource type="PackedScene" uid="uid://cr7jaerjdmjbw" path="res://scenes/moving_platform.tscn" id="6_7qxh4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2bu26"]
@@ -47,6 +48,9 @@ position = Vector2(683, 111)
 
 [node name="Ranged Enemy" parent="." instance=ExtResource("4_4m0n2")]
 position = Vector2(89, 154)
+
+[node name="Projectile" parent="." instance=ExtResource("5_5jg1q")]
+position = Vector2(131, 158)
 
 [node name="Enemy" parent="." groups=["pausable"] instance=ExtResource("3_i2tp2")]
 position = Vector2(550, 212)

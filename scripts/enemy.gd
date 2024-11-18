@@ -23,7 +23,8 @@ func _physics_process(_delta):
 	if active:
 		animated_sprite.play()
 		var space = get_world_2d().direct_space_state
-		var query = PhysicsRayQueryParameters2D.create(position, position + Vector2(MOVE_DIR * 100, 100))
+		var query = PhysicsRayQueryParameters2D.create(position, position + Vector2(MOVE_DIR * 5, 5))
+		query.set_collision_mask(4)
 		var ray_cast = space.intersect_ray(query)
 		
 		if is_on_wall() or ray_cast.is_empty():
