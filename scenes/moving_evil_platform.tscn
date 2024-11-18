@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://xre3lapoy6pe"]
+
+[ext_resource type="Script" path="res://scripts/moving_evil_platform.gd" id="1_ugosl"]
+[ext_resource type="Texture2D" uid="uid://5y6kes7dp0vd" path="res://assets/evil_platform.png" id="2_e5gl3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oro3g"]
+size = Vector2(150, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w41mf"]
+size = Vector2(150, 8)
+
+[node name="Moving Evil Platform" type="AnimatableBody2D" groups=["pausable"]]
+scale = Vector2(2, 1)
+collision_layer = 8
+script = ExtResource("1_ugosl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_e5gl3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(12, -1.5)
+shape = SubResource("RectangleShape2D_oro3g")
+
+[node name="Area2D" type="Area2D" parent="." groups=["pausable"]]
+collision_layer = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(12, -1)
+shape = SubResource("RectangleShape2D_w41mf")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
