@@ -1,11 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://nm3keol8rr63"]
+[gd_scene load_steps=12 format=3 uid="uid://nm3keol8rr63"]
 
 [ext_resource type="PackedScene" uid="uid://5v34nt0bbvuj" path="res://scenes/corruption.tscn" id="1_jij70"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_jgokv"]
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
 [ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
+[ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="5_q7l5x"]
 [ext_resource type="PackedScene" uid="uid://bj5nhr1j00kfo" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
-[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
+[ext_resource type="PackedScene" uid="uid://bgoe3qbmol40t" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
+[ext_resource type="PackedScene" path="res://scenes/flying_enemy.tscn" id="8_kxbdv"]
+[ext_resource type="PackedScene" path="res://scenes/moving_platform.tscn" id="9_pqtud"]
+[ext_resource type="PackedScene" uid="uid://tm6e3tu5mo6p" path="res://scenes/moving_evil_platform.tscn" id="10_riyfk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
 font_size = 48
@@ -27,7 +31,13 @@ offset_bottom = 63.0
 label_settings = SubResource("LabelSettings_ot66m")
 
 [node name="Player" parent="." instance=ExtResource("2_jgokv")]
-position = Vector2(506, 518)
+position = Vector2(7502, 2234)
+
+[node name="StandingCollisionBox" parent="Player" index="0"]
+position = Vector2(0, 0)
+
+[node name="CrouchingCollisionBox" parent="Player" index="1"]
+position = Vector2(0, 12.5)
 
 [node name="AnimatedSprite2D" parent="Player" index="2"]
 animation = &"air_dash"
@@ -96,8 +106,26 @@ position = Vector2(7300, 2317)
 scale = Vector2(8, 1)
 
 [node name="Platform15" parent="." instance=ExtResource("3_yv6ef")]
-position = Vector2(7766, 2366)
+position = Vector2(8435, 2149)
 scale = Vector2(4, 1)
+
+[node name="Platform16" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9500, 2149)
+scale = Vector2(8, 1)
+
+[node name="Platform17" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9488, 1071)
+rotation = 1.5708
+scale = Vector2(10, 1)
+
+[node name="Platform18" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(10199, 1282)
+rotation = 1.5708
+scale = Vector2(10, 1)
+
+[node name="Platform19" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(11375, 438)
+scale = Vector2(30, 1)
 
 [node name="EvilPlatform" parent="." instance=ExtResource("4_20qhp")]
 position = Vector2(1204, 425)
@@ -107,6 +135,26 @@ rotation = 1.5708
 position = Vector2(6754, 2168)
 rotation = 1.5708
 scale = Vector2(10, 1)
+
+[node name="Enemy" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(8382, 2112)
+MOVE_DIR = 1
+
+[node name="Enemy2" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(9783, 1928)
+MOVE_DIR = 1
+
+[node name="Enemy3" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(9527, 2106)
+MOVE_DIR = -1
+
+[node name="Flying Enemy" parent="." instance=ExtResource("8_kxbdv")]
+position = Vector2(8829, 2011)
+MOVE_DIR = 1
+
+[node name="Flying Enemy2" parent="." instance=ExtResource("8_kxbdv")]
+position = Vector2(8965, 2240)
+MOVE_DIR = -1
 
 [node name="ControlScheme" parent="." instance=ExtResource("5_ummvn")]
 offset_left = 1055.0
@@ -193,6 +241,177 @@ offset_bottom = 2049.0
 [node name="Checkpoint" parent="." instance=ExtResource("6_npcu3")]
 position = Vector2(7405, 1307)
 scale = Vector2(100, 1)
+
+[node name="Moving Platform2" parent="." instance=ExtResource("9_pqtud")]
+position = Vector2(9737, 1969)
+scale = Vector2(4, 1)
+MOVE_DIR = 1
+MOVE_DISTANCE = 100.0
+
+[node name="Platform20" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9620, 1781)
+
+[node name="Moving Evil Platform" parent="." instance=ExtResource("10_riyfk")]
+position = Vector2(9920, 1781)
+MOVE_DIR = 1
+
+[node name="Platform21" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(10022, 1607)
+
+[node name="Moving Evil Platform2" parent="." instance=ExtResource("10_riyfk")]
+position = Vector2(9722, 1607)
+MOVE_DIR = -1
+
+[node name="Platform22" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9824, 1429)
+
+[node name="Moving Evil Platform3" parent="." instance=ExtResource("10_riyfk")]
+position = Vector2(9524, 1429)
+MOVE_DIR = -1
+MOVE_DISTANCE = 100.0
+
+[node name="Moving Evil Platform4" parent="." instance=ExtResource("10_riyfk")]
+position = Vector2(10124, 1429)
+MOVE_DIR = 1
+MOVE_DISTANCE = 100.0
+
+[node name="Flying Enemy3" parent="." instance=ExtResource("8_kxbdv")]
+position = Vector2(9833, 1221)
+
+[node name="Platform23" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9587, 1231)
+scale = Vector2(1.5, 1)
+
+[node name="Platform24" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(10067, 1230)
+scale = Vector2(1.5, 1)
+
+[node name="EvilPlatform3" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(9815, 1055)
+scale = Vector2(3, 1)
+
+[node name="Platform26" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9620, 971)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform25" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(10078, 971)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform27" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9814, 764)
+scale = Vector2(3, 1)
+
+[node name="Platform28" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(9620, 821)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform29" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(10078, 821)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform30" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(11519, 649)
+scale = Vector2(21, 1)
+
+[node name="EvilPlatform4" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(10199, 528)
+rotation = 1.5708
+scale = Vector2(1.3, 1)
+
+[node name="EvilPlatform5" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(10653, 504)
+rotation = 1.5708
+
+[node name="Enemy4" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(11242, 610)
+MOVE_DIR = -1
+
+[node name="Flying Enemy4" parent="." instance=ExtResource("8_kxbdv")]
+position = Vector2(10994, 480)
+MOVE_DIR = -1
+
+[node name="EvilPlatform6" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(11708, 579)
+scale = Vector2(2, 1)
+
+[node name="EvilPlatform7" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(11708, 509)
+scale = Vector2(2, 1)
+
+[node name="Enemy5" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(9811, 721)
+
+[node name="Enemy6" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(9545, 1195)
+
+[node name="Enemy7" parent="." instance=ExtResource("5_q7l5x")]
+position = Vector2(10091, 1192)
+
+[node name="Platform31" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13349, 1084)
+rotation = 1.5708
+scale = Vector2(7, 1)
+
+[node name="Platform32" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13988, 872)
+rotation = 1.5708
+scale = Vector2(7, 1)
+
+[node name="EvilPlatform8" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(13544, 649)
+scale = Vector2(3, 1)
+
+[node name="EvilPlatform9" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(13724, 849)
+scale = Vector2(3, 1)
+
+[node name="EvilPlatform10" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(13544, 1066)
+scale = Vector2(3, 1)
+
+[node name="EvilPlatform11" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(13724, 1271)
+scale = Vector2(3, 1)
+
+[node name="Platform33" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13724, 1280)
+scale = Vector2(3, 1)
+
+[node name="Platform34" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13607, 1690)
+scale = Vector2(4, 1)
+
+[node name="Platform35" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13544, 658)
+scale = Vector2(3, 1)
+
+[node name="Platform36" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13724, 858)
+scale = Vector2(3, 1)
+
+[node name="Platform37" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(13545, 1075)
+scale = Vector2(3, 1)
+
+[node name="EvilPlatform12" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(13988, 1573)
+rotation = 1.5708
+scale = Vector2(1.45, 1)
+
+[node name="EvilPlatform13" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(13607, 1681)
+scale = Vector2(4, 1)
+
+[node name="Flying Enemy5" parent="." instance=ExtResource("8_kxbdv")]
+position = Vector2(13661, 1411)
+
+[node name="Flying Enemy6" parent="." instance=ExtResource("8_kxbdv")]
+position = Vector2(13662, 1646)
 
 [connection signal="body_entered" from="Corruption/Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
 [connection signal="death" from="Player" to="Corruption" method="_on_player_death"]

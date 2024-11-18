@@ -83,6 +83,9 @@ font_color = Color(0, 0, 0, 1)
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_bg7pv"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/50/0/ascent = 0.0
 cache/0/50/0/descent = 0.0
 cache/0/50/0/underline_position = 0.0
@@ -107,6 +110,9 @@ font_color = Color(0, 0, 0, 1)
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_p55tf"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/50/0/ascent = 0.0
 cache/0/50/0/descent = 0.0
 cache/0/50/0/underline_position = 0.0
@@ -130,6 +136,9 @@ font_size = 50
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_shl6o"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/50/0/ascent = 0.0
 cache/0/50/0/descent = 0.0
 cache/0/50/0/underline_position = 0.0
@@ -153,6 +162,9 @@ font_size = 50
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_5cr6c"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/50/0/ascent = 0.0
 cache/0/50/0/descent = 0.0
 cache/0/50/0/underline_position = 0.0
@@ -176,6 +188,9 @@ font_size = 50
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_f6m2e"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -199,6 +214,9 @@ font_size = 50
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_3ecqr"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/50/0/ascent = 0.0
 cache/0/50/0/descent = 0.0
 cache/0/50/0/underline_position = 0.0

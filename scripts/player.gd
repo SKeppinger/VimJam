@@ -22,7 +22,7 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY_X = 500
 @export var WALL_JUMP_TIME = 0.1 # seconds
 
-static var START_POSITION = Vector2(510,525)
+static var START_POSITION = Vector2(12000,600)
 
 signal death
 
