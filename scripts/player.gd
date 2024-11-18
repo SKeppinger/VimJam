@@ -69,8 +69,8 @@ func _ready():
 	crouching_hitbox = $CrouchingCollisionBox
 	#sprite = $Sprite2D
 	animated_sprite = $AnimatedSprite2D
-	#pause_label = $"../Corruption/CanvasLayer/Label" # actual level
-	pause_label = $"../Label" # test level
+	pause_label = $"../Corruption/CanvasLayer/Label" # actual level
+	#pause_label = $"../Label" # test level
 	position = START_POSITION
 
 # Handle pause functionality
@@ -128,6 +128,7 @@ func jump():
 	# Wall Jump
 	elif is_on_wall_only():
 		print("wall jump")
+		has_air_dash = true
 		wall_jumping = true
 		fast_falling = false # Wall jump should reset fast fall
 		velocity.y = WALL_JUMP_VELOCITY_Y
