@@ -32,6 +32,8 @@ var crouching_hitbox
 #var sprite
 var animated_sprite
 var pause_label
+var music
+var sfx
 
 # Control Variables
 var dead = false
@@ -62,6 +64,17 @@ var sliding = false
 # Sprites
 var crouch_sprite = load("res://assets/temp_crouch.png")
 var stand_sprite = load("res://assets/temp_player.png")
+# SFX
+var jump_sound = load("res://assets/sounds/Jump.wav")
+var dash_sound = load("res://assets/sounds/Notso_Confirm.wav")
+var pause_sound = load("res://assets/sounds/Pause.wav")
+var death_sound = load("res://assets/sounds/Explosion.wav")
+var corruption_sound = load("res://assets/sounds/Evil_Laugh.wav")
+
+# Play a sound
+func play_sound(sound):
+	sfx.stream = sound
+	sfx.play()
 
 # Initialize child node references
 func _ready():
@@ -72,6 +85,8 @@ func _ready():
 	pause_label = $"../Corruption/CanvasLayer/Label" # actual level
 	#pause_label = $"../Label" # test level
 	position = START_POSITION
+	music = $Music
+	sfx = $SFX
 
 # Handle pause functionality
 func pause():
@@ -86,6 +101,7 @@ func pause():
 func dash():
 	# Dash
 	if is_on_floor():
+		play_sound(dash_sound)
 		dashing = true
 		animated_sprite.play("dash")
 		if move_direction == 0:
@@ -98,6 +114,7 @@ func dash():
 		if move_direction == 0:
 			pass
 		else:
+			play_sound(dash_sound)
 			velocity.y = 0
 			dashing = true
 			air_dashing = true
@@ -119,15 +136,18 @@ func jump():
 			dash_timer = 0.0 # Dash Jump extends the dash to be longer, translating to horizontal speed in the air
 			velocity.y = JUMP_VELOCITY
 			animated_sprite.play("jump")
+			play_sound(jump_sound)
 			animated_sprite.frame = 0
 		# Else, normal jump:
 		else:
 			velocity.y = JUMP_VELOCITY
 			animated_sprite.play("jump")
+			play_sound(jump_sound)
 			animated_sprite.frame = 0
 	# Wall Jump
 	elif is_on_wall_only():
 		print("wall jump")
+		play_sound(jump_sound)
 		has_air_dash = true
 		wall_jumping = true
 		fast_falling = false # Wall jump should reset fast fall
@@ -136,6 +156,7 @@ func jump():
 	# Double Jump
 	elif has_double_jump and not is_on_floor():
 		print("double jump")
+		play_sound(jump_sound)
 		fast_falling = false # Double Jump should reset fast fall
 		velocity.y = JUMP_VELOCITY
 		has_double_jump = false
@@ -232,10 +253,12 @@ func _physics_process(delta):
 		
 		# PAUSE TIMER
 		if paused:
+			music.volume_db = -25
 			pause_timer += delta
 			pause_label.text = "%.2f" % pause_timer
 			if pause_timer >= PAUSE_TIME:
 				paused = false
+				music.volume_db = -7
 				pause_timer = 0.0
 				for node in get_tree().get_nodes_in_group("paused"):
 					node.remove_from_group("paused")
@@ -358,6 +381,11 @@ func _physics_process(delta):
 					wall_jump_timer = 0.0
 
 		move_and_slide()
+		
+	else:
+		music.volume_db -= delta * 10
+		if music.volume_db < -100:
+			music.stop()
 
 func _on_death_barrier_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -373,6 +401,7 @@ func die():
 		death.emit()
 		animated_sprite.play("death")
 		dead = true
+		play_sound(death_sound)
 	
 #Kill (with hammers)
 func _on_visible_on_screen_notifier_2d_screen_exited():
