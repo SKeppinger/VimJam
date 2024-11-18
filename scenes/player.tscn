@@ -7,7 +7,7 @@
 size = Vector2(51, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iby47"]
-size = Vector2(51, 40)
+size = Vector2(51, 55)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2r4oe"]
 atlas = ExtResource("3_q6q66")
@@ -239,14 +239,14 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_vvj4b")
 
 [node name="CrouchingCollisionBox" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 20)
+position = Vector2(-0.5, 12.5)
 shape = SubResource("RectangleShape2D_iby47")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 2.38419e-06)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_uc0bj")
-animation = &"idle"
+animation = &"slide"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]

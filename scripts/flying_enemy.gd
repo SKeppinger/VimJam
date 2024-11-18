@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
-var active = true
-var animated_sprite
-
 @export var MOVE_DIR = 0
 @export var SPEED = 80.0
+@export var MOVE_DISTANCE = 16000.0
+
+var active = true
+var animated_sprite
+var moved = 0.0
 
 func _ready():
 	animated_sprite = $AnimatedSprite2D
@@ -15,23 +17,21 @@ func _ready():
 	scale.x *= MOVE_DIR
 
 func _physics_process(_delta):
+	
 	if is_in_group("paused"):
 		active = false
 	else:
 		active = true
-
+	
 	if active:
 		animated_sprite.play()
-		var space = get_world_2d().direct_space_state
-		var query = PhysicsRayQueryParameters2D.create(position, position + Vector2(MOVE_DIR * 100, 100))
-		var ray_cast = space.intersect_ray(query)
-		
-		if is_on_wall() or ray_cast.is_empty():
+		if moved >= MOVE_DISTANCE:
 			MOVE_DIR *= -1
 			scale.x *= -1
+			moved = 0.0
 		
-		velocity += get_gravity()
 		velocity.x = MOVE_DIR * SPEED
+		moved += SPEED
 		move_and_slide()
 	else:
 		animated_sprite.stop()
