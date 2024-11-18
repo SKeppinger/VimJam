@@ -112,6 +112,7 @@ offset_top = 389.0
 offset_right = 601.0
 offset_bottom = 420.0
 text = "Restart"
+flat = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1

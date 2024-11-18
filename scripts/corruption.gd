@@ -41,8 +41,8 @@ func _on_player_death():
 
 func _on_checkpoint_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		speed=1;
-		progress = 0.01;
+		speed=4;
+		progress = 0.00;
 		if !visibility.is_on_screen():
 			position.x = player.position.x - player.get_node("Camera2D").get_viewport_rect().size.x - collision_offset;
 		

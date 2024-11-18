@@ -412,4 +412,7 @@ func _on_checkpoint_body_entered(body):
 	if body.name == "Player":
 		START_POSITION = position
 		
-	
+func _on_win_body_entered(body):
+	if body.name == "Player":
+		get_node("../Corruption/CanvasLayer/WinScreen/AnimationPlayer").play("fade_to_black_win")
+		

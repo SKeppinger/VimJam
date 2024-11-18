@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://xre3lapoy6pe"]
+[gd_scene load_steps=5 format=3 uid="uid://tm6e3tu5mo6p"]
 
 [ext_resource type="Script" path="res://scripts/moving_evil_platform.gd" id="1_ugosl"]
 [ext_resource type="Texture2D" uid="uid://5y6kes7dp0vd" path="res://assets/evil_platform.png" id="2_e5gl3"]

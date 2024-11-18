@@ -1,19 +1,23 @@
-[gd_scene load_steps=12 format=3 uid="uid://nm3keol8rr63"]
+[gd_scene load_steps=14 format=3 uid="uid://nm3keol8rr63"]
 
 [ext_resource type="PackedScene" uid="uid://5v34nt0bbvuj" path="res://scenes/corruption.tscn" id="1_jij70"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_jgokv"]
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
 [ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
 [ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="5_q7l5x"]
-[ext_resource type="PackedScene" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
-[ext_resource type="PackedScene" uid="uid://d3nxm08bqjmv7" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
+[ext_resource type="PackedScene" uid="uid://bj5nhr1j00kfo" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
+[ext_resource type="PackedScene" uid="uid://bgoe3qbmol40t" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
 [ext_resource type="PackedScene" path="res://scenes/flying_enemy.tscn" id="8_kxbdv"]
 [ext_resource type="PackedScene" path="res://scenes/moving_platform.tscn" id="9_pqtud"]
-[ext_resource type="PackedScene" path="res://scenes/moving_evil_platform.tscn" id="10_riyfk"]
+[ext_resource type="PackedScene" uid="uid://tm6e3tu5mo6p" path="res://scenes/moving_evil_platform.tscn" id="10_riyfk"]
+[ext_resource type="PackedScene" uid="uid://c11dn54djydu5" path="res://scenes/win_screen.tscn" id="11_bb5tv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
 font_size = 48
 font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5wmvy"]
+size = Vector2(425, 46)
 
 [node name="Level" type="Node2D"]
 
@@ -23,7 +27,13 @@ z_index = 1
 [node name="Background" parent="Corruption" index="0"]
 position = Vector2(0, 0)
 
-[node name="Label" type="Label" parent="Corruption/CanvasLayer" index="1"]
+[node name="WinScreen" parent="Corruption/CanvasLayer" index="0" instance=ExtResource("11_bb5tv")]
+offset_left = 10655.0
+offset_top = 495.0
+offset_right = 10655.0
+offset_bottom = 495.0
+
+[node name="Label" type="Label" parent="Corruption/CanvasLayer" index="2"]
 offset_left = 1055.0
 offset_top = -4.0
 offset_right = 1095.0
@@ -227,15 +237,15 @@ offset_right = 5152.0
 offset_bottom = 2045.0
 
 [node name="Escape" parent="ControlScheme/Controls" index="15"]
-offset_left = 7024.0
+offset_left = 6799.0
 offset_top = 1919.0
-offset_right = 7204.0
+offset_right = 6979.0
 offset_bottom = 1988.0
 
 [node name="ESC" parent="ControlScheme/Controls" index="16"]
-offset_left = 7064.0
+offset_left = 6839.0
 offset_top = 1982.0
-offset_right = 7147.0
+offset_right = 6922.0
 offset_bottom = 2049.0
 
 [node name="Checkpoint" parent="." instance=ExtResource("6_npcu3")]
@@ -324,7 +334,7 @@ rotation = 1.5708
 scale = Vector2(1.3, 1)
 
 [node name="EvilPlatform5" parent="." instance=ExtResource("4_20qhp")]
-position = Vector2(10653, 504)
+position = Vector2(10655, 495)
 rotation = 1.5708
 
 [node name="Enemy4" parent="." instance=ExtResource("5_q7l5x")]
@@ -413,11 +423,28 @@ position = Vector2(13661, 1411)
 [node name="Flying Enemy6" parent="." instance=ExtResource("8_kxbdv")]
 position = Vector2(13662, 1646)
 
+[node name="Platform38" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(14178, 1690)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("6_npcu3")]
+position = Vector2(12027, 542)
+scale = Vector2(10, 1)
+
+[node name="win" type="Area2D" parent="."]
+position = Vector2(7502, 2234)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="win"]
+position = Vector2(6825, -762)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_5wmvy")
+
 [connection signal="body_entered" from="Corruption/Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
 [connection signal="death" from="Player" to="Corruption" method="_on_player_death"]
 [connection signal="body_entered" from="Checkpoint" to="Corruption" method="_on_checkpoint_body_entered"]
 [connection signal="body_entered" from="Checkpoint" to="Player" method="_on_checkpoint_body_entered"]
+[connection signal="body_entered" from="win" to="Player" method="_on_win_body_entered"]
 
 [editable path="Corruption"]
+[editable path="Corruption/CanvasLayer/WinScreen"]
 [editable path="Player"]
 [editable path="ControlScheme"]
