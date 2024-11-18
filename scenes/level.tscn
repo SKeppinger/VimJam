@@ -4,12 +4,17 @@
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_jgokv"]
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
 [ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://clh2bt8chos5r" path="res://scenes/enemy.tscn" id="5_q7l5x"]
 [ext_resource type="PackedScene" uid="uid://bj5nhr1j00kfo" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
 [ext_resource type="PackedScene" uid="uid://bgoe3qbmol40t" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
 [ext_resource type="PackedScene" path="res://scenes/flying_enemy.tscn" id="8_kxbdv"]
 [ext_resource type="PackedScene" path="res://scenes/moving_platform.tscn" id="9_pqtud"]
 [ext_resource type="PackedScene" uid="uid://tm6e3tu5mo6p" path="res://scenes/moving_evil_platform.tscn" id="10_riyfk"]
+=======
+[ext_resource type="PackedScene" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
+[ext_resource type="PackedScene" uid="uid://d3nxm08bqjmv7" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
+>>>>>>> Stashed changes
 
 [sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
 font_size = 48
@@ -415,6 +420,7 @@ position = Vector2(13662, 1646)
 
 [connection signal="body_entered" from="Corruption/Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
 [connection signal="death" from="Player" to="Corruption" method="_on_player_death"]
+[connection signal="body_entered" from="Checkpoint" to="Corruption" method="_on_checkpoint_body_entered"]
 [connection signal="body_entered" from="Checkpoint" to="Player" method="_on_checkpoint_body_entered"]
 
 [editable path="Corruption"]

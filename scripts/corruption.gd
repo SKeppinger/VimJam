@@ -22,21 +22,27 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (player && !completed && 
-		collision.position.x > player.position.x && 
+		collision.global_position.x > player.position.x && 
 		!visibility.is_on_screen()
 	):
 		death_screen.play("fade_to_black");
 		completed = true;
 	elif (!completed):
 		background.material.set_shader_parameter("pos",progress);
-		collision.position.x = position.x + (progress * background.texture.get_width() + collision_offset);
+		collision.position.x = progress * background.texture.get_width() + collision_offset;
 		progress += delta * speed / 100;
-	print("vis:" + str(visibility.global_position.x))
-	print("player:" + str(player.position.x))
 
 func _on_player_death():
 	speed = 10;
+	progress = 0;
 	if !visibility.is_on_screen():
 		position.x = player.position.x - player.get_node("Camera2D").get_viewport_rect().size.x
-		print(collision.position.x)
-	
+
+
+func _on_checkpoint_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		speed=1;
+		progress = 0.01;
+		if !visibility.is_on_screen():
+			position.x = player.position.x - player.get_node("Camera2D").get_viewport_rect().size.x - collision_offset;
+		
