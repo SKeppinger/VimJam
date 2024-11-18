@@ -73,7 +73,7 @@ func _ready():
 # Handle pause functionality
 func pause():
 	if not paused:
-		for node in get_tree().get_nodes_in_group("movable"):
+		for node in get_tree().get_nodes_in_group("pausable"):
 			node.add_to_group("paused")
 		paused = true
 

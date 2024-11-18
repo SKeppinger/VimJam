@@ -9,7 +9,7 @@ size = Vector2(150, 9)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_idpbk"]
 size = Vector2(152, 11)
 
-[node name="EvilPlatform" type="StaticBody2D"]
+[node name="EvilPlatform" type="StaticBody2D" groups=["pausable"]]
 collision_layer = 5
 script = ExtResource("1_cgdhk")
 
