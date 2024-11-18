@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://nm3keol8rr63"]
+[gd_scene load_steps=7 format=3 uid="uid://nm3keol8rr63"]
 
 [ext_resource type="PackedScene" uid="uid://5v34nt0bbvuj" path="res://scenes/corruption.tscn" id="1_jij70"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_jgokv"]
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
 [ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
+[ext_resource type="PackedScene" uid="uid://bj5nhr1j00kfo" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
 font_size = 48
@@ -22,20 +23,106 @@ offset_bottom = 63.0
 label_settings = SubResource("LabelSettings_ot66m")
 
 [node name="Player" parent="." instance=ExtResource("2_jgokv")]
-position = Vector2(641, 529)
+position = Vector2(3105, 228)
 
 [node name="AnimatedSprite2D" parent="Player" index="2"]
 animation = &"air_dash"
 
+[node name="Camera2D" parent="Player" index="3"]
+limit_top = -1000
+
 [node name="Platform" parent="." instance=ExtResource("3_yv6ef")]
-position = Vector2(1106, 579)
-scale = Vector2(10, 1)
+position = Vector2(968, 576)
+scale = Vector2(8, 1)
+
+[node name="Platform2" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(2200, 576)
+scale = Vector2(5, 1)
+
+[node name="Platform3" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(2638, 492)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform4" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(2761, 426)
+
+[node name="Platform5" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(2938, 342)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform6" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(3061, 276)
+
+[node name="Platform7" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(3238, 192)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform8" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(3025, 109)
+rotation = 1.5708
+scale = Vector2(1, 1)
+
+[node name="Platform9" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(3238, 133)
+rotation = 1.5708
+scale = Vector2(1, 1)
 
 [node name="EvilPlatform" parent="." instance=ExtResource("4_20qhp")]
-position = Vector2(1204, 513)
+position = Vector2(1204, 425)
+rotation = 1.5708
+
+[node name="ControlScheme" parent="." instance=ExtResource("5_ummvn")]
+offset_left = 1055.0
+offset_top = -4.0
+offset_right = 1055.0
+offset_bottom = -4.0
+
+[node name="Crouch" parent="ControlScheme/Controls" index="3"]
+offset_left = 1137.0
+offset_right = 1309.0
+
+[node name="S" parent="ControlScheme/Controls" index="4"]
+offset_left = 1207.0
+offset_right = 1247.0
+
+[node name="Jump" parent="ControlScheme/Controls" index="5"]
+offset_left = 1696.0
+offset_top = 119.0
+offset_right = 1822.0
+offset_bottom = 188.0
+
+[node name="SPACE" parent="ControlScheme/Controls" index="6"]
+offset_left = 1688.0
+offset_right = 1827.0
+
+[node name="AirJump" parent="ControlScheme/Controls" index="7"]
+offset_left = 2547.0
+offset_right = 2754.0
+offset_bottom = 188.0
+
+[node name="SPACE_in_air" parent="ControlScheme/Controls" index="8"]
+offset_left = 2493.0
+offset_right = 2817.0
+offset_bottom = 262.0
+
+[node name="WallJump" parent="ControlScheme/Controls" index="9"]
+offset_left = 3013.0
+offset_top = -257.0
+offset_right = 3256.0
+offset_bottom = -188.0
+
+[node name="SPACE_on_wall" parent="ControlScheme/Controls" index="10"]
+offset_left = 2941.0
+offset_top = -188.0
+offset_right = 3325.0
+offset_bottom = -119.0
 
 [connection signal="body_entered" from="Corruption/Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
 [connection signal="death" from="Player" to="Corruption" method="_on_player_death"]
 
 [editable path="Corruption"]
 [editable path="Player"]
+[editable path="ControlScheme"]
