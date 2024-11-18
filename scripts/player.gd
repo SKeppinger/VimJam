@@ -22,7 +22,7 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY_X = 500
 @export var WALL_JUMP_TIME = 0.1 # seconds
 
-static var START_POSITION = Vector2(12000,600)
+static var START_POSITION = Vector2(578,504)
 
 signal death
 
@@ -258,7 +258,7 @@ func _physics_process(delta):
 			pause_label.text = "%.2f" % pause_timer
 			if pause_timer >= PAUSE_TIME:
 				paused = false
-				music.volume_db = -7
+				music.volume_db = -12
 				pause_timer = 0.0
 				for node in get_tree().get_nodes_in_group("paused"):
 					node.remove_from_group("paused")

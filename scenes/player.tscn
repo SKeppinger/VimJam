@@ -259,10 +259,11 @@ limit_bottom = 768
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_x6due")
-volume_db = -7.0
+volume_db = -12.0
 autoplay = true
 parameters/looping = true
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
