@@ -4,7 +4,7 @@ var background;
 var collision;
 var player;
 var progress = 0;
-var speed = 2;
+var speed = 0.1;
 var collision_offset = 150;
 var visibility;
 var death_screen;

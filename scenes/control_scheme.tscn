@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://bj5nhr1j00kfo"]
+
+[sub_resource type="FontFile" id="FontFile_qgxi6"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/50/0/ascent = 0.0
+cache/0/50/0/descent = 0.0
+cache/0/50/0/underline_position = 0.0
+cache/0/50/0/underline_thickness = 0.0
+cache/0/50/0/scale = 1.0
+
+[sub_resource type="FontVariation" id="FontVariation_rpi2p"]
+base_font = SubResource("FontFile_qgxi6")
+
+[sub_resource type="LabelSettings" id="LabelSettings_paqip"]
+font = SubResource("FontVariation_rpi2p")
+font_size = 50
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="FontFile" id="FontFile_8bj40"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/50/0/ascent = 0.0
+cache/0/50/0/descent = 0.0
+cache/0/50/0/underline_position = 0.0
+cache/0/50/0/underline_thickness = 0.0
+cache/0/50/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_x1mjg"]
+font = SubResource("FontFile_8bj40")
+font_size = 50
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wyc0y"]
+font_size = 50
+font_color = Color(0, 0, 0, 1)
+
+[node name="ControlScheme" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Move" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="A" type="Label" parent="Move"]
+texture_filter = 2
+offset_left = 723.0
+offset_top = 193.0
+offset_right = 773.0
+offset_bottom = 263.0
+size_flags_horizontal = 4
+text = "A"
+label_settings = SubResource("LabelSettings_paqip")
+horizontal_alignment = 1
+
+[node name="D" type="Label" parent="Move"]
+texture_filter = 2
+offset_left = 806.0
+offset_top = 193.0
+offset_right = 856.0
+offset_bottom = 263.0
+text = "D"
+label_settings = SubResource("LabelSettings_x1mjg")
+horizontal_alignment = 1
+
+[node name="Move" type="Label" parent="Move"]
+texture_filter = 2
+offset_left = 721.0
+offset_top = 119.0
+offset_right = 853.0
+offset_bottom = 188.0
+text = "Move"
+label_settings = SubResource("LabelSettings_wyc0y")

@@ -12,6 +12,7 @@ font_color = Color(0, 0, 0, 1)
 [node name="Level" type="Node2D"]
 
 [node name="Corruption" parent="." instance=ExtResource("1_jij70")]
+z_index = 1
 
 [node name="Label" type="Label" parent="Corruption/CanvasLayer" index="1"]
 offset_left = 1055.0
@@ -21,7 +22,7 @@ offset_bottom = 63.0
 label_settings = SubResource("LabelSettings_ot66m")
 
 [node name="Player" parent="." instance=ExtResource("2_jgokv")]
-position = Vector2(508, 519)
+position = Vector2(641, 529)
 
 [node name="AnimatedSprite2D" parent="Player" index="2"]
 animation = &"air_dash"
