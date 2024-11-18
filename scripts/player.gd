@@ -22,11 +22,7 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY_X = 500
 @export var WALL_JUMP_TIME = 0.1 # seconds
 
-<<<<<<< Updated upstream
 static var START_POSITION = Vector2(12000,600)
-=======
-static var START_POSITION = Vector2(7000,2000)
->>>>>>> Stashed changes
 
 signal death
 
