@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var FRICTION = 30.0
 @export var AIR_RESIST = 1.0
 @export var ACCELERATION = 60.0
-@export var AIR_ACCEL = 40.0
+@export var AIR_ACCEL = 20.0
 @export var SPEED = 300.0
 @export var DASH_SPEED = 600.0
 @export var CROUCH_SPEED = 100.0
@@ -21,6 +21,8 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY_Y = -300
 @export var WALL_JUMP_VELOCITY_X = 300
 @export var WALL_JUMP_TIME = 0.1 # seconds
+
+static var START_POSITION = Vector2(510,525)
 
 signal death
 
@@ -69,6 +71,7 @@ func _ready():
 	#sprite = $Sprite2D
 	animated_sprite = $AnimatedSprite2D
 	pause_label = $"../Corruption/CanvasLayer/Label"
+	position = START_POSITION
 
 # Handle pause functionality
 func pause():
@@ -193,6 +196,8 @@ func get_move_direction():
 	return dir
 
 func _physics_process(delta):
+	#print(is_on_floor())
+	#print(is_on_wall())
 	if not dead:
 		#ANIMATIONS
 		# Face the movement direction
@@ -373,3 +378,10 @@ func die():
 #Kill (with hammers)
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	die()
+
+#checkpoint!!!
+func _on_checkpoint_body_entered(body):
+	if body.name == "Player":
+		START_POSITION = position
+		
+	

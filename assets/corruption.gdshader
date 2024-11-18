@@ -8,7 +8,7 @@ float random (vec2 uv) {
     return fract(sin(dot(uv.xy,
         vec2(12.9898,78.233))) * 43758.5453123);
 }
-uniform int amount = 100;
+uniform int amount = 1000;
 uniform float pos = 0.00;
 
 void fragment() {

@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofg1w"]
 shader = ExtResource("2_d7pbe")
-shader_parameter/amount = 150
+shader_parameter/amount = 1500
 shader_parameter/pos = 0.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1o7r2"]
@@ -33,7 +33,7 @@ position = Vector2(-3.41336e-06, 1)
 shape = SubResource("WorldBoundaryShape2D_1o7r2")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Background/DeathBarrier"]
-rect = Rect2(0, 0, 768, 10)
+rect = Rect2(0, 0, 7680, 10)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://nm3keol8rr63"]
+[gd_scene load_steps=8 format=3 uid="uid://nm3keol8rr63"]
 
 [ext_resource type="PackedScene" uid="uid://5v34nt0bbvuj" path="res://scenes/corruption.tscn" id="1_jij70"]
 [ext_resource type="PackedScene" uid="uid://b7boqxochp1h6" path="res://scenes/player.tscn" id="2_jgokv"]
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
 [ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
 [ext_resource type="PackedScene" uid="uid://bj5nhr1j00kfo" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
+[ext_resource type="PackedScene" uid="uid://bgoe3qbmol40t" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
 font_size = 48
@@ -15,6 +16,9 @@ font_color = Color(0, 0, 0, 1)
 [node name="Corruption" parent="." instance=ExtResource("1_jij70")]
 z_index = 1
 
+[node name="Background" parent="Corruption" index="0"]
+position = Vector2(0, 0)
+
 [node name="Label" type="Label" parent="Corruption/CanvasLayer" index="1"]
 offset_left = 1055.0
 offset_top = -4.0
@@ -23,13 +27,14 @@ offset_bottom = 63.0
 label_settings = SubResource("LabelSettings_ot66m")
 
 [node name="Player" parent="." instance=ExtResource("2_jgokv")]
-position = Vector2(3105, 228)
+position = Vector2(506, 518)
 
 [node name="AnimatedSprite2D" parent="Player" index="2"]
 animation = &"air_dash"
 
 [node name="Camera2D" parent="Player" index="3"]
 limit_top = -1000
+limit_bottom = 3000
 
 [node name="Platform" parent="." instance=ExtResource("3_yv6ef")]
 position = Vector2(968, 576)
@@ -61,7 +66,7 @@ rotation = 1.5708
 scale = Vector2(1, 1)
 
 [node name="Platform8" parent="." instance=ExtResource("3_yv6ef")]
-position = Vector2(3025, 109)
+position = Vector2(3027, 97)
 rotation = 1.5708
 scale = Vector2(1, 1)
 
@@ -70,9 +75,38 @@ position = Vector2(3238, 133)
 rotation = 1.5708
 scale = Vector2(1, 1)
 
+[node name="Platform10" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(3361, 67)
+
+[node name="Platform11" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(3538, 1006)
+rotation = 1.5708
+scale = Vector2(15, 1)
+
+[node name="Platform12" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(4039, 2317)
+scale = Vector2(8, 1)
+
+[node name="Platform13" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(5800, 2317)
+scale = Vector2(6, 1)
+
+[node name="Platform14" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(7300, 2317)
+scale = Vector2(8, 1)
+
+[node name="Platform15" parent="." instance=ExtResource("3_yv6ef")]
+position = Vector2(7766, 2366)
+scale = Vector2(4, 1)
+
 [node name="EvilPlatform" parent="." instance=ExtResource("4_20qhp")]
 position = Vector2(1204, 425)
 rotation = 1.5708
+
+[node name="EvilPlatform2" parent="." instance=ExtResource("4_20qhp")]
+position = Vector2(6754, 2168)
+rotation = 1.5708
+scale = Vector2(10, 1)
 
 [node name="ControlScheme" parent="." instance=ExtResource("5_ummvn")]
 offset_left = 1055.0
@@ -115,13 +149,54 @@ offset_right = 3256.0
 offset_bottom = -188.0
 
 [node name="SPACE_on_wall" parent="ControlScheme/Controls" index="10"]
-offset_left = 2941.0
+offset_left = 2955.0
 offset_top = -188.0
-offset_right = 3325.0
+offset_right = 3339.0
 offset_bottom = -119.0
+
+[node name="FastFall" parent="ControlScheme/Controls" index="11"]
+offset_left = 3633.0
+offset_top = -257.0
+offset_right = 3829.0
+offset_bottom = -188.0
+
+[node name="S_in_air" parent="ControlScheme/Controls" index="12"]
+offset_left = 3640.0
+offset_top = -188.0
+offset_right = 3828.0
+offset_bottom = -121.0
+
+[node name="Dash" parent="ControlScheme/Controls" index="13"]
+offset_left = 5028.0
+offset_top = 1909.0
+offset_right = 5150.0
+offset_bottom = 1978.0
+
+[node name="SHIFT" parent="ControlScheme/Controls" index="14"]
+offset_left = 5026.0
+offset_top = 1978.0
+offset_right = 5152.0
+offset_bottom = 2045.0
+
+[node name="Escape" parent="ControlScheme/Controls" index="15"]
+offset_left = 7024.0
+offset_top = 1919.0
+offset_right = 7204.0
+offset_bottom = 1988.0
+
+[node name="ESC" parent="ControlScheme/Controls" index="16"]
+offset_left = 7064.0
+offset_top = 1982.0
+offset_right = 7147.0
+offset_bottom = 2049.0
+
+[node name="Checkpoint" parent="." instance=ExtResource("6_npcu3")]
+position = Vector2(7405, 1307)
+scale = Vector2(100, 1)
 
 [connection signal="body_entered" from="Corruption/Background/DeathBarrier" to="Player" method="_on_death_barrier_body_entered"]
 [connection signal="death" from="Player" to="Corruption" method="_on_player_death"]
+[connection signal="body_entered" from="Checkpoint" to="Player" method="_on_checkpoint_body_entered"]
 
 [editable path="Corruption"]
 [editable path="Player"]
