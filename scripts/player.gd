@@ -19,7 +19,7 @@ extends CharacterBody2D
 @export var COYOTE_TIME = 0.1
 @export var FAST_FALL_FACTOR = 3.0
 @export var WALL_JUMP_VELOCITY_Y = -300
-@export var WALL_JUMP_VELOCITY_X = 300
+@export var WALL_JUMP_VELOCITY_X = 500
 @export var WALL_JUMP_TIME = 0.1 # seconds
 
 static var START_POSITION = Vector2(510,525)
@@ -52,7 +52,6 @@ var dash_timer = 0.0
 
 var has_double_jump = true
 
-var has_wall_jump = true
 var wall_jumping = false
 var wall_jump_timer = 0.0
 
@@ -70,7 +69,8 @@ func _ready():
 	crouching_hitbox = $CrouchingCollisionBox
 	#sprite = $Sprite2D
 	animated_sprite = $AnimatedSprite2D
-	pause_label = $"../Corruption/CanvasLayer/Label"
+	#pause_label = $"../Corruption/CanvasLayer/Label" # actual level
+	pause_label = $"../Label" # test level
 	position = START_POSITION
 
 # Handle pause functionality
@@ -126,13 +126,12 @@ func jump():
 			animated_sprite.play("jump")
 			animated_sprite.frame = 0
 	# Wall Jump
-	elif has_wall_jump and is_on_wall_only():
+	elif is_on_wall_only():
 		print("wall jump")
 		wall_jumping = true
 		fast_falling = false # Wall jump should reset fast fall
 		velocity.y = WALL_JUMP_VELOCITY_Y
 		velocity.x = WALL_JUMP_VELOCITY_X * get_wall_normal().x
-		has_wall_jump = false
 	# Double Jump
 	elif has_double_jump and not is_on_floor():
 		print("double jump")
@@ -257,7 +256,6 @@ func _physics_process(delta):
 			has_double_jump = true
 			has_air_dash = true
 			fast_falling = false
-			has_wall_jump = true
 		
 		# CROUCH CHECK
 		# If crouching and not holding the crouch button, stop crouching/sliding

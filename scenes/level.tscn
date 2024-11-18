@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cfophi3uqd7u" path="res://scenes/platform.tscn" id="3_yv6ef"]
 [ext_resource type="PackedScene" uid="uid://b6rfmlu4yi1lg" path="res://scenes/evil_platform.tscn" id="4_20qhp"]
 [ext_resource type="PackedScene" uid="uid://bj5nhr1j00kfo" path="res://scenes/control_scheme.tscn" id="5_ummvn"]
-[ext_resource type="PackedScene" uid="uid://bgoe3qbmol40t" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="6_npcu3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ot66m"]
 font_size = 48
